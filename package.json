@@ -1,25 +1,20 @@
 {
   "name": "backend-project",
   "version": "1.0.0",
-  "description": "a backend at chai aur code ",
-  "type": "module",
+  "description": "a backend at chai aur code channel ",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "\\"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [
     "javascript",
-    "backend",
-    "chai"
+    "backend"
   ],
   "author": "Sarthak Rawat",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3"
   }
 }
