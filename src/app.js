@@ -1,16 +1,27 @@
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-import connectDB from "./db";
-const app = express()
-dotenvdotsample.config({
-    path: './env'
-})
+import express from 'express'
+import cors from "cors"
+import cookieParser from 'cookie-parser';
+// with my server i can access the cookie of user browser and set mean i can do crud operation 
+// server can remove and add cookies 
+ const app = express();
 
-connectDB()
-.then(()=>{
-    app.listen(process.env.PORT || 8000,()=>{
-        console.log(`Server is running at port :${process.env.PORT}`)
-    })
-}).catch((err)=>{
-    console.log("Mongo db connection failed !!! ", err);
-})
+app.use(cors({
+    orgin: process.env.CORS_ORIGIN,
+    credentials: true,
+}))
+
+app.use(express.json({
+    limit : '16kb'
+}))
+app.use(express.urlencoded({
+    extended: true,
+    limit: "16kb"
+}))
+// to encode the url 
+app.use(express.static("public"));
+// for img or any other file which are in public any one can asses it 
+
+app.use(cookieParser())
+
+
+export {app}
