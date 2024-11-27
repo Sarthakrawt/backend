@@ -7,3 +7,6 @@ class ApiResponse {
         // in server there are statusCode for differnt type of data 
     }
 }
+//Api response for give the response to user
+
+export {ApiResponse};

@@ -1,15 +1,14 @@
-const asyncHandler = (resquestHandler) => {
+const asyncHandler = async (resquestHandler) => (
     (req, res, next)=>{
-        Promise.resolve().catch((error)=>next(err))
+        Promise.resolve(resquestHandler(req, res, next)).catch((err)=>next(err))
     }
-}
-
+)
 
 export {asyncHandler}
 
 
 
-
+// this file is for handling funciton and execute them 
 
 // const asyncHandler  =(fn) =>async (req , res ,next)=>{
 // try{

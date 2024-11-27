@@ -29,6 +29,7 @@ connectDB()
 // ;(async ()=>{
 //     try{
 //       await mongoose.connect(`${process.env.MONGODB_URI}`)
+// app.on listener is just used when your server have some issue 
 //       app.on('error', (error)=>{
 //         console.log("Error", error);
 //         throw error

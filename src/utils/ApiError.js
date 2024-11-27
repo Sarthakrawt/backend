@@ -20,3 +20,6 @@ class ApiError extends Error{
 
     }
 }
+
+export {ApiError};
+//this file is used for handling the api error 
