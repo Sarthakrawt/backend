@@ -41,15 +41,31 @@ const UserSchema =  new mongoose.Schema({
     }
 },{
     timestamps: true
-}) 
-UserSchema.pre("save", async function(next){
-    if(this.isModified("password")){
+});
+
+
+UserSchema.pre('save', async function(next){
+    if(!this.isModified("password")){
         return next();
     }
-this.password =await bcrypt.hash(this.password, 10)
+    try{
+         console.log("password after hashing"
+        , this.password)
+this.password = await bcrypt.hash(this.password, 10)
+console.log("password after hashing"
+    , this.password)
 next()
-})
+    } catch(err){
+        console.error("Error hashing password" , err)
+    }
+   
+});
+
+
+
 UserSchema.methods.isPasswordCorrect = async function (password){
+    console.log("password",password);
+    console.log("Hashed Password", this.password);
    return  await bcrypt.compare(password, this.password);
 }
 
@@ -61,11 +77,13 @@ UserSchema.methods.generateAccessToken = function(){
             _id:this._id,
             email:this.email,
             username:this.username,
-            fullname: this.fullname
+            fullName: this.fullName
         },
-        process.env.ACCESS_TOKEN_SECRET,{
-            expriresIn : process.env.ACCESS_TOKEN_EXPIRY
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+            expiresIn : process.env.ACCESS_TOKEN_EXPIRY
         }
+       
     )
 }
 // sign is use to generate tokens 
@@ -75,7 +93,7 @@ UserSchema.methods.generateRefreshToken = function(){
             _id:this._id,
         },
         process.env.REFRESH_TOKEN_SECRET,{
-            expriresIn : process.env.REFRESH_TOKEN_EXPIRY
+            expiresIn : process.env.REFRESH_TOKEN_EXPIRY
         }
     )
 }

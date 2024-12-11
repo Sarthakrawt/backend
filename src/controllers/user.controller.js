@@ -50,7 +50,6 @@ const registerUser = asyncHandler(async(req , res) =>{
     
 
    const avatarLocalPath = req.files?.avatar[0]?.path;
-   console.log(avatarLocalPath)
    // const coverImageLocalPath = req.files?.coverImage[0]?.path;
     let coverImageLocalPath;
     if(req.files && Array.isArray(req.files.coverImage)&& req.files.coverImage.length > 0){
@@ -59,9 +58,9 @@ const registerUser = asyncHandler(async(req , res) =>{
    // console.log(req.files);
    if(!avatarLocalPath){
       throw new ApiError(400, "Avatar file is required");}
-
+ console.log(avatarLocalPath);
       const avatar = await uploadOnCloudinary(avatarLocalPath)
-      
+      console.log(avatar);
       const coverImage = await uploadOnCloudinary(coverImageLocalPath)
     
       if(!avatar){
@@ -95,20 +94,23 @@ const registerUser = asyncHandler(async(req , res) =>{
 // access and refresh token
 // send cookie
 const {username ,email, password}= req.body;
-if(!username || !email){
+if(!(username || email)){
    throw new ApiError(400, "username or email is required");
 }
-const user = User.findOne({
+console.log(req.body);
+const user =  await User.findOne({
    $or: [{username},{email}]
 })
 // or operator check one if there is username otherwise take email
 if(!user){
-throw new ApiError(404, "User does not exist")
+throw new ApiError(404, "user does not exist")
 }
+console.log(user);
 
- const isPasswordVaild = await user.isPasswordCorrect(password)
+ const isPasswordVaild = await user.isPasswordCorrect(password);
+ console.log(isPasswordVaild)
 if(!isPasswordVaild){
-   throw new ApiError(401, "invalid user credentials");
+   throw new ApiError(401, "invalid user credentials ");
 }
 const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
 
@@ -117,7 +119,7 @@ const options = {
    httpOnly: true, 
    secure: true
 }
-// mean you can only modify the cookies in server that it 
+// mean you can only modify the cookies in server that's it 
 return res.status(200)
 .cookie("accessToken", accessToken, options)
 .cookie("refreshToken", refreshToken, options)
@@ -160,5 +162,6 @@ return res.status(200)
    })
 export {
    registerUser,
-    loginUser
+    loginUser,
+    logoutUser
 };
