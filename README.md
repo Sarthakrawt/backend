@@ -1,5 +1,3 @@
-// database connectivity
-// there are two way to connect dB
-
-// first write all the code in index file
-// second db folder then inside that make a function and using in index file
+hey there How are you doing today
+As you can see this is my backend of an project which i am working on recently if you want to contribute please do it and assest me with this project 
+Thanks!
